@@ -8,32 +8,38 @@
 describe('Feature Test:', function(){
   var plane;
   var airport;
+  var weather;
 
   beforeEach(function(){
     plane = new Plane();
-    airport = new Airport();
+    airport = new Airport(weather);
   });
 
   it('planes can be instructed to land at an airport', function(){
+    spyOn(Math,'random').and.returnValue(0);
     plane.land(airport);
     expect(airport.planes()).toContain(plane);
   });
   it('planes can be instructed to take off from airport', function(){
+    spyOn(Math,'random').and.returnValue(0);
     plane.land(airport);
     plane.takeOff(airport);
     expect(airport.planes()).toEqual([]);
     // expect(airport.planes()).not.toContain(plane);
   });
 
-// As an air traffic controller
-// To ensure safety
-// I want to prevent takeoff when weather is stormy
-
   it('blocks takeoff when weather is stormy', function(){
+    spyOn(Math,'random').and.returnValue(0);
     plane.land(airport)
-    spyOn(airport,'isStormy').and.returnValue(true);
+    spyOn(airport._weather,'isStormy').and.returnValue(true);
     expect(function(){ plane.takeOff();}).toThrowError('cannot takeoff during storm');
     expect(airport.planes()).toContain(plane);
+  });
+
+  it('blocks landing when weather is stormy', function(){
+    spyOn(Math,'random').and.returnValue(1);
+    expect(function(){ plane.land(airport); }).toThrowError('cannot land during storm');
+    expect(airport.planes()).toEqual([]);
   });
 
 });
