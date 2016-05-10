@@ -24,9 +24,16 @@ describe('Feature Test:', function(){
     expect(airport.planes()).toEqual([]);
     // expect(airport.planes()).not.toContain(plane);
   });
-});
 
 // As an air traffic controller
-// To get passengers to a destination
-// I want to instruct a plan to take off from
-//   an airport and confirm that it is no longer in the airport
+// To ensure safety
+// I want to prevent takeoff when weather is stormy
+
+  it('blocks takeoff when weather is stormy', function(){
+    plane.land(airport)
+    spyOn(airport,'isStormy').and.returnValue(true);
+    expect(function(){ plane.takeOff();}).toThrowError('cannot takeoff during storm');
+    expect(airport.planes()).toContain(plane);
+  });
+
+});
