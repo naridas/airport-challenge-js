@@ -1,24 +1,20 @@
+"use strict";
+
 describe("Plane", function(){
   var plane;
-
+  var airport;
   beforeEach(function() {
     plane = new Plane();
+    airport = jasmine.createSpyObj('airport',['clearForLanding']);
   });
 
-  it("responds to landed", function () {
-    // ? is not working on the expect or other lines
-    expect(plane.land).not.toBeUndefined()
+  it('responds to land',function () {
+    expect(plane.land).not.toBeUndefined();
   });
 
-  it("when instructed to land, it is landed", function () {
-    // plane.wedassadfae
-    expect(plane.landed).toBeTruthy()
+  it('can land at an airport',function() {
+    plane.land(airport);
+    expect(airport.clearForLanding).toHaveBeenCalledWith(plane);
   });
-
-  it("when instructed to takeoff landed is false", function () {
-    plane.takeoff
-    expect(plane.landed).toBeFalsy()
-  });
-
 
 });
