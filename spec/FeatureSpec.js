@@ -18,6 +18,12 @@ describe('Feature Test:', function(){
     plane.land(airport);
     expect(airport.planes()).toContain(plane);
   });
+  it('planes can be instructed to take off from airport', function(){
+    plane.land(airport);
+    plane.takeOff(airport);
+    expect(airport.planes()).toEqual([]);
+    // expect(airport.planes()).not.toContain(plane);
+  });
 });
 
 // As an air traffic controller
