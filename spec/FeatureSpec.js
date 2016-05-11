@@ -15,25 +15,32 @@ describe('Feature Test:', function(){
     airport = new Airport(weather);
   });
 
-  it('planes can be instructed to land at an airport', function(){
-    spyOn(Math,'random').and.returnValue(0);
-    plane.land(airport);
-    expect(airport.planes()).toContain(plane);
-  });
-  it('planes can be instructed to take off from airport', function(){
-    spyOn(Math,'random').and.returnValue(0);
-    plane.land(airport);
-    plane.takeOff(airport);
-    expect(airport.planes()).toEqual([]);
-    // expect(airport.planes()).not.toContain(plane);
-  });
+  describe('in good weather conditions, ', function(){
+    beforeEach(function(){
+      spyOn(Math,'random').and.returnValue(0);
+    });
 
-  it('blocks takeoff when weather is stormy', function(){
-    spyOn(Math,'random').and.returnValue(0);
-    plane.land(airport)
-    spyOn(airport._weather,'isStormy').and.returnValue(true);
-    expect(function(){ plane.takeOff();}).toThrowError('cannot takeoff during storm');
-    expect(airport.planes()).toContain(plane);
+    it('planes can be instructed to land at an airport', function(){
+      // spyOn(Math,'random').and.returnValue(0);
+      plane.land(airport);
+      expect(airport.planes()).toContain(plane);
+    });
+
+    it('planes can be instructed to take off from airport', function(){
+      // spyOn(Math,'random').and.returnValue(0);
+      plane.land(airport);
+      plane.takeOff(airport);
+      expect(airport.planes()).toEqual([]);
+      // expect(airport.planes()).not.toContain(plane);
+    });
+
+    it('blocks takeoff when weather is stormy', function(){
+      // spyOn(Math,'random').and.returnValue(0);
+      plane.land(airport)
+      spyOn(airport._weather,'isStormy').and.returnValue(true);
+      expect(function(){ plane.takeOff();}).toThrowError('cannot takeoff during storm');
+      expect(airport.planes()).toContain(plane);
+    });
   });
 
   it('blocks landing when weather is stormy', function(){
